@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link rel="shortcut icon" href="https://cdn.icon-icons.com/icons2/159/PNG/256/cloud_weather_22376.png">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/weather.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/static.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Raleway" rel="stylesheet">
+
+    <link rel="stylesheet" href="{%static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{%static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{%static 'css/owl.carousel.min.css' %}">
+
+    <link rel="stylesheet" href="{%static 'fonts/ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{%static 'fonts/fontawesome/css/font-awesome.min.css' %}">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    
+</head>
+
+<body class="bg-light" style="
+      background-image: url(https://searchthisweb.com/wallpaper/sunset_5120x3200_958k7.jpg);
+      background-size: 1800px;
+      background-position: 55% 0%
+      ">
+
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+    
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="/index" class="nav-link px-2 text-secondary">Home</a></li>
+              <!-- <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li> -->
+              <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
+            </ul>
+    
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+              <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+            </form>
+    
+            <div class="text-end">
+              <button type="button" class="btn btn-outline-light me-2">Login</button>
+              <button type="button" class="btn btn-warning">Sign-up</button>
+            </div>
+          </div>
+        </div>
+      </header>
+    <div class="container">
+      <main>
+
+        <div class="py-5 text-center">
+          <a href="/"><img class="d-block mx-auto mb-4" src="https://cdn.icon-icons.com/icons2/159/PNG/256/cloud_weather_22376.png" alt="" width="72" height="70"></a>
+          <h1 class="blue">Погодное приложение</h1>
+        </div>
+            <form  method="post" class="card p-2" style="background-color: rgb(47, 47, 47);">
+              {% csrf_token %}
+              <div class="input-group">
+                <input type="text" id = "city" name = "city" class="form-control" placeholder="Введите город" ">
+                <button type="submit" class="btn btn-secondary" style="background-color: rgb(47, 47, 47);">Найти</button>
+              </div>
+            </form>
+        </div>
+      </main>
+      {% if w %}
+      {% if w.temp < 0 %}
+        
+      <div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 32%; top: 400px;">
+        <div class="card p-3" style="background-image: url(https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6835012235034.560a8e5be9e14.jpg); background-position: 50% 95%;">
+          <figure class="p-3 mb-0" ></figure>
+            <blockquote class="blockquote">
+                <h1 class="blue" >Город: {{w.city}} <img src="http://openweathermap.org/img/w/{{context.icon}}.png" alt=""></p>
+                <h1 clas="blue">Температура: {{w.temp}}&#176;</h1>
+            </blockquote>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      {% elif w.temp < 10%}
+
+      <div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 32%; top: 400px;">
+        <div class="card p-3" style="background-image: url(https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6835012235034.560a8e5be9e14.jpg); background-position: 6% 32%;">
+          <figure class="p-3 mb-0" ></figure>
+            <blockquote class="blockquote">
+                <h1 class = "yellow">Город: {{w.city}} <img src="http://openweathermap.org/img/w/{{context.icon}}.png" alt=""></p>
+                <h1 class = "yellow">Температура: {{w.temp}}&#176;</h1>
+            </blockquote>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      {% elif w.temp < 20%}
+
+      <div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 32%; top: 400px;">
+        <div class="card p-3" style="background-image: url(https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6835012235034.560a8e5be9e14.jpg); background-position: 95% 3%;">
+          <figure class="p-3 mb-0" ></figure>
+            <blockquote class="blockquote">
+                <h1 class = "orange">Город: {{w.city}} <img src="http://openweathermap.org/img/w/{{context.icon}}.png" alt=""></p>
+                <h1 class = "orange">Температура: {{w.temp}}&#176;</h1>
+            </blockquote>
+
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      {% elif w.temp < 30%}
+
+      <div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 32%; top: 400px;">
+        <div class="card p-3" style="background-image: url(https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6835012235034.560a8e5be9e14.jpg); background-position: 8% 3%;">
+          <figure class="p-3 mb-0" ></figure>
+            <blockquote class="blockquote">
+                <h1 class="red" white;">Город: {{w.city}} <img src="http://openweathermap.org/img/w/{{context.icon}}.png" alt=""></p>
+                <h1 class="red">Температура: {{w.temp}}&#176;</h1>
+            </blockquote>
+
+            {% else%}
+
+            <div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 32%; top: 400px;">
+              <div class="card p-3" style="background-image: url(https://phonoteka.org/uploads/posts/2021-05/1622149289_16-phonoteka_org-p-lava-art-krasivo-16.jpg); background-position: 50% 50%; background-size: 700px;">
+                <figure class="p-3 mb-0" ></figure>
+                  <blockquote class="blockquote">
+                      <h1 class="white">Город: {{w.city}} <img src="http://openweathermap.org/img/w/{{context.icon}}.png" alt=""></p>
+                      <h1 class="white">Температура: {{w.temp}}&#176;</h1>
+                  </blockquote>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      {% endif %}
+      {% else %}
+      <h1 class = "orange" style="position: absolute; left:  13%; top: 400px;">Введите название города для получения информации</h1>
+      <h1 class = "yellow" style="position: absolute; left: 18%; top: 440px;">или выберите из списка популярных городов</h1>
+      <h1 class = "blue" style="position: absolute; left: 46%; top: 480px;">&#8595;       &#8595;        &#8595;</h1>
+      <section class="slider-wrap site-section">
+        <div class="container">
+          <!-- <div id="div_top_hypers">
+            <ul id="ul_top_hypers">
+            </ul>
+              <ul id="ul_top_hypers">
+                {% if blog %}  
+                {% for i in category %}
+                <li>	&#9898;<a style = 'color: black;' href="?slug={{i.slug}}" class="a_top_hypers">{{i.title}}&#9898;</a></li>
+                {% endfor %}
+                
+                
+            </ul>
+        </div> -->
+          <div class="row">
+            {% for contact in page_obj %}
+            <div class="col-md-4 element-animate ">
+              <a href="{% url 'detail' contact.slug %}" class="img-bg last" 
+              {% if contact.image %}
+              style="
+              border:3px #000000  solid; ;
+              border-radius: 10px;
+              background-image: url({{contact.image.url}})"
+              {% else  %}
+              style="background-image: url({%static 'images/img_3.jpg' %})"
+              {% endif %}
+              >
+                <div class="text">
+                <h1 style="font-family: 'Rubik One', sans-serif;
+                font-size: 30px;
+                text-transform: uppercase;
+                background: linear-gradient(100deg, #021166 20%, #0062ff 50%, #8bdeff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                color: #0B2349;
+                display: table;
+                margin: 20px auto;">{{ contact.title }}</h1><br>
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- pagginate section  -->
+              <div class="pagination">
+                  <span class="step-links">
+                      {% if page_obj.has_previous %}
+                          <a href="?page=1" class="btn btn-primary">&laquo; Первая</a>
+                          <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary">Предыдущая</a>
+                      {% endif %}
+  
+                      <span class="current">
+                        <h1 style="font-family: 'Rubik One', sans-serif;
+                        font-size: 20px;
+                        text-transform: uppercase;
+                        background: linear-gradient(100deg, #021166 20%, #0062ff 50%, #8bdeff);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        color: #0B2349;
+                        display: table;
+                        margin: 20px auto;">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                      {% if page_obj.number  ==  page_obj.paginator.num_pages %}
+                      <br>
+                      больше нет ;(
+                      {% endif %}   
+                      </h1>
+                      </span>
+  
+                      {% if page_obj.has_next %}
+                          <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary">Следующая</a>
+                          <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-primary">Последняя &raquo;</a>
+                      {% endif %}
+                  </span>
+              </div>
+          
+        </div>
+        {% else %}
+        <div id="div_top_hypers">
+          <ul id="ul_top_hypers">
+            <div class="text">
+            <h1 style="font-family: 'Rubik One', sans-serif;
+            font-size: 50px;
+            text-transform: uppercase;
+            background: linear-gradient(100deg, #021166 20%, #0062ff 50%, #8bdeff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #0B2349;
+            display: table;
+            margin: 20px auto;"">Список постов пуст :( <br>
+              Попробуйте выбрать другие категории</h1>
+            </div>
+              
+              {% for i in category %}
+                <li>	&#9898;<a style = 'color: black;' href="?slug={{i.slug}}" class="a_top_hypers">{{i.title}}&#9898;</a></li>
+              {% endfor %}
+                
+          </ul>
+        </div>
+        {% endif %}
+      </section>
+      <!-- END section -->
+  
+      {% endif %}
+    <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="form-validation.js"></script>
+    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+
+    <script src="{%static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{%static 'js/jquery-migrate-3.0.0.js' %}"></script>
+    <script src="{%static 'js/popper.min.js' %}"></script>
+    <script src="{%static 'js/bootstrap.min.js' %}"></script>
+    <script src="{%static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{%static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{%static 'js/jquery.stellar.min.js' %}"></script>
+
+    <script src="{%static 'js/main.js' %}"></script>
+    
+    </body>
+</html>

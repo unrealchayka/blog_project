@@ -1,0 +1,4 @@
+django
+django-summernote
+pillow
+django-debug-toolbar

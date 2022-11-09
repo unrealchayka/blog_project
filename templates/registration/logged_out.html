@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-image: url(https://img3.akspic.ru/attachments/crops/9/6/3/6/86369/86369-zamok_osaka-gorodskoj_pejzazh-metropoliya-orientir-neboskreb-1920x1080.jpg);">
+    {% extends 'base.html' %}
+{% block main %}
+<h1 style="color: white;" class="text-center">Django Authentication Example</h1>
+
+<div style="border:3px #000000  solid; ;
+border-radius: 10px;
+background-color: white;">
+
+<h3>Вы вышил из системы</h3>
+<a  href="{% url 'login' %}">Регистрация</a>
+или
+<a  href="{% url 'home' %}">Главная страница</a>
+</div>
+
+{% endblock %}
+    
+</body>
+</html>
