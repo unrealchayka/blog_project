@@ -19,13 +19,11 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 class Post(models.Model):
-
     title = models.CharField('название', max_length=25)
     image = models.ImageField(upload_to='post/%Y/%m/%d/')
     author = models.ForeignKey(CustomUser, on_delete = models.CASCADE ,verbose_name = 'автор')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='категории')
     slug = models.SlugField(max_length=255) 
-    # unique=True
     text = models.TextField()
     date_create = models.DateTimeField(auto_now_add=True)
     moderation = models.BooleanField(default = False)
@@ -38,19 +36,32 @@ class Post(models.Model):
         verbose_name_plural = 'Посты'
 
 
-class Commet(models.Model):
-
+class CommetPost(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    book = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
 
     def __str__(self):
-        return f'{self.user} -> {self.book}'
+        return f'{self.user} -> {self.post}'
 
     class Meta: 
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Комментарий к посту'
+        verbose_name_plural = 'Комментарии к постам'
+
+
+class CommetCity(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    city = models.ForeignKey('City', on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
+
+    def __str__(self):
+        return f'{self.user} -> {self.city}'
+
+    class Meta: 
+        verbose_name = 'Комментарий к городу'
+        verbose_name_plural = 'Комментарии к городам'
 
 class Star(models.Model):
 
@@ -70,7 +81,7 @@ class Rating(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='пост')
 
     def __str__(self):
-        return f'{self.user}->{self.book} star:{self.star}'
+        return f'{self.user}->{self.post} star:{self.star}'
 
     class Meta: 
         verbose_name = 'Рейтинг'
