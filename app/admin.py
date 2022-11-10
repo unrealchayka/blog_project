@@ -19,7 +19,9 @@ class CSomeModelAdmin(SummernoteModelAdmin):
 
 admin.site.register(Category)
 admin.site.register(Post, SomeModelAdmin)
-admin.site.register(Commet)
+admin.site.register(CommetPost)
+admin.site.register(Follow)
+admin.site.register(CommetCity)
 admin.site.register(City, CSomeModelAdmin)
 admin.site.register(Star)
 admin.site.register(Rating)

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from django.shortcuts import redirect, render
 
 from .service import Weather, TelegrammMessage
-from .models import Post, Category, City, CustomUser
+from .models import Post, Category, City, CustomUser, Follow
 from django.views import View
 from django.core.paginator import Paginator
 from .forms import PostForm
@@ -22,9 +22,8 @@ class HomeView(View):
         return render(request, 'index.html', locals())
 
     def post(self, request):
-        try:
-            w = Weather(request.POST['city'])
-        except:
+        w = Weather(request.POST.get('city').title())
+        if not w:
             return redirect('home')
         try: 
             detail_city = City.objects.get(
@@ -40,10 +39,7 @@ class HomeView(View):
 class DetailCityView(View):
     def get(self, request, slug):
         city =  get_object_or_404(City, slug=slug)
-        try:
-            w  = Weather(city.title_ru)
-        except:
-            w = None
+        w  = Weather(city.title_ru)
 
         return render(request, 'detail_city.html', locals())
 
@@ -111,6 +107,21 @@ class AboutView(View):
         user = CustomUser.objects.filter(is_superuser=True)
         return render(request, 'about.html', locals())
 
+class FollowView(View):
+    def post(self, request):
+        user = request.POST['user']
+        user2 = request.user
+        Follow.objects.create(user_id=user, follower=user2)
+        return redirect('user', request.POST['username'])
+
+class DelFollowView(View):
+    def post(self, request):
+        user = request.POST['user']
+        user2 = request.user
+        follow = Follow.objects.filter(user_id=user, follower=user2)
+        follow.delete()
+        return redirect('user', request.POST['username'])
+
 
 class ContactView(View):
     def get(self, request):
@@ -130,6 +141,10 @@ class AuthorView(View):
         if username == request.user.username:
             return redirect('profile')
         user = get_object_or_404(CustomUser, username=username)
+        try:
+            follow = Follow.objects.get(follower = request.user, user = user)
+        except:
+            follow = None
         post = Post.objects.filter(author=user)
         return render(request, 'user.html', locals())
 

@@ -98,6 +98,11 @@ class City(models.Model):
     min_description = models.TextField(max_length=1000)
     text = models.TextField()
 
+    def save(self, *args, **kwargs):
+            self.title_ru = self.title_ru.title()
+            self.title_eng = self.title_eng.title()
+            return super(City, self).save(*args, **kwargs)
+
     def __str__(self):
         return f'{self.title_ru}'
 
@@ -106,3 +111,14 @@ class City(models.Model):
         verbose_name_plural = 'Города'
 
 
+class Follow(models.Model):
+    user = models.ForeignKey(CustomUser,  on_delete=models.CASCADE, verbose_name='пользователь', related_name='user')
+    follower = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='подписчик', related_name='follower')
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.follower} -> {self.user} date:{self.date}'
+
+    class Meta: 
+        verbose_name = 'Подписчик'
+        verbose_name_plural = 'Подписчики'

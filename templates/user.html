@@ -97,9 +97,32 @@
                   {% if not user.image %}
                   src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
                   {% else %} src = '{{user.image.url}}' 
-                  {% endif %}><span class="font-weight-bold">Имя: {{user.first_name}}<br> Фамилия: {{user.last_name}}</span><span class="text-black-50">email: {{user.email}}</span><span> </span></div>
-                  <img src="https://8uh.ru/wp-content/uploads/2016/03/16459.gif">
-                  <h5>у вас муха на экране &#128578</h5>
+                  {% endif %}><span class="font-weight-bold">Имя: {{user.first_name}}<br> Фамилия: {{user.last_name}}</span><span class="text-black-50">email: {{user.email}}</span><span> </span>
+                  <br>
+                  {% if follow %}
+                  <form method="post"  action="{%url 'del_follow'%}">
+                    {% csrf_token %} 
+                    <input type="hidden" name="user" value="{{user.id}}">
+                    <input type="hidden" name="username" value="{{user.username}}">
+                    <input style="
+                    background-color: rgb(175, 175, 175);
+                    border:3px black solid;
+                    border-radius: 10px;
+                    " class="btn btn_default" type="submit" value="Отписатся">
+                  </form>
+                  {% else %}
+                  <form method="post" action="{%url 'follow'%}">
+                    {% csrf_token %} 
+                    <input type="hidden" name="user" value="{{user.id}}">
+                    <input type="hidden" name="username" value="{{user.username}}">
+                    <input style="
+                    background-color: rgb(106, 215, 255); 
+                    border:3px black solid;
+                    border-radius: 10px;
+                    " class="btn btn_default" type="submit" value="Подписаться">
+                  </form>
+                  {% endif %}
+                </div>
             </div>
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
@@ -128,7 +151,6 @@
         <div class="row">
           <div class="col-md-4 pr-5">
             {% if post %}
-              
             <h2 class="mb-3">Посты данного пользователя<br> </h2>
             <div class="mb-3">
               <a href="#" class="btn btn-primary custom-prev mr-2 mb-2"><span class="ion-android-arrow-back"></span></a> 

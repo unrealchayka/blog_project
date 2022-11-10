@@ -7,13 +7,17 @@ app_id = APP_ID
 
 
 def Weather(city):
-    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid=' + app_id
-    res = requests.get(url).json()
-    city_info = {
-        'city' : city,
-        'temp' : res['main']['temp'],
-        'icon' : res['weather'][0]['icon'],
-    }
+    try:
+        url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid=' + app_id
+        res = requests.get(url).json()
+        city_info = {
+            'city' : city,
+            'temp' : res['main']['temp'],
+            'icon' : res['weather'][0]['icon'],
+            }
+    except:
+        city_info = None
+        
     return city_info
 
 def TelegrammMessage(message):
