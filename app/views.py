@@ -42,6 +42,10 @@ class DetailCityView(View):
         w  = Weather(city.title_ru)
 
         return render(request, 'detail_city.html', locals())
+    
+    
+def print_hello():
+    print('hello')
 
 
 class BlogView(View):
