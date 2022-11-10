@@ -43,10 +43,6 @@ class DetailCityView(View):
 
         return render(request, 'detail_city.html', locals())
     
-    
-def printsad():
-    print('hello')
-
 
 class BlogView(View):
     def get(self, request):
