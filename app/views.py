@@ -44,7 +44,7 @@ class DetailCityView(View):
         return render(request, 'detail_city.html', locals())
     
     
-def print_hello():
+def printsad():
     print('hello')
 
 
