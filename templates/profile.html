@@ -82,7 +82,14 @@
             <div class="mb-5 element-animate">
               <h1>Здравствуйте {% if user.first_name %},{% endif %} {{user.first_name}}</h1> <p>Вы находитесь в личном кабанете,
                  тут вы можете посмотреть список ваших постов или же создать новый пост</p>
-                 <a href="{% url 'create-post' %}"><h1 style="color: rgb(157, 0, 255);"><mark class="red">&#9829;</mark>Создать свой пост<mark class="red">&#9829;</mark></h1></a>
+                 <a href="{% url 'create-post' %}"><h1 
+                 style="
+                 color: rgb(0, 30, 255);
+                 border: 3px black solid;
+                 background-color: white;
+                 border-radius: 10px;
+                 opacity: 0.7;
+                  "><mark class="red">&#9829;</mark>Создать свой пост<mark class="red">&#9829;</mark></h1></a>
               <p></p>
             </div>
 
@@ -136,6 +143,8 @@
     <!-- END section -->
     
     <section class="site-section">
+      <hr style="height: 90px;border: none;
+      border-top: 10px solid black;">
       <div class="container">
         <div class="row">
           <div class="col-md-4 pr-5">
@@ -175,6 +184,50 @@
           </div>
         </div>
       </div>
+
+      
+      <hr style="height: 90px;border: none;
+      border-top: 10px solid black;">
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 pr-5">
+            {% if post %}
+            <h2 class="mb-3">Ваши подписки<br> </h2>
+            <div class="mb-3">
+              <a href="#" class="btn btn-primary custom-prev mr-2 mb-2"><span class="ion-android-arrow-back"></span></a> 
+              <a href="#" class="btn btn-primary custom-next mr-2 mb-2"><span class="ion-android-arrow-forward"></span></a>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-12 slider-wrap">
+                <div class="owl-carousel owl-theme no-nav js-carousel-1">
+                  {% for i in follow %}
+                  <a href="{% url 'user' i.user.username %}" class="img-bg last"
+                    {% if i.image %}
+                    style = 'background-image: url(i.user.image.url);'
+                    {% else %}
+                    style = 'background-image: url(https://lazarevka-house.ru/wp-content/uploads/2021/05/ico.jpg); background-position: -28px;'
+                    {% endif %}>
+                    <div class="text">
+                      <h2 style="color: blue">{{i.user}}</h2>
+                      <p>{{i.}}</p>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h1>Ваш список постов пуст &#128577</h1>
+                    <h2>Хотите создать <a href="{% url 'create-post' %}">новый пост</a> ?</h2>
+                  {% endif %}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
     <!-- END section -->
    

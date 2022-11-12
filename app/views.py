@@ -1,15 +1,15 @@
 from datetime import datetime, timedelta
-from django.shortcuts import redirect, render
 
-from .service import Weather, TelegrammMessage
-from .models import Post, Category, City, CustomUser, Follow
-from django.views import View
-from django.core.paginator import Paginator
-from .forms import PostForm
-from django.shortcuts import get_object_or_404
-from django.db.models import Q
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.decorators import method_decorator
+from django.views import View
+
+from .forms import PostForm
+from .models import Category, City, CustomUser, Follow, Post
+from .service import TelegrammMessage, Weather
 
 
 class HomeView(View):
@@ -27,8 +27,8 @@ class HomeView(View):
             return redirect('home')
         try: 
             detail_city = City.objects.get(
-            Q(title_ru=request.POST['city'])|
-            Q(title_eng=request.POST['city'])
+            Q(title_ru=request.POST.get('city').title())|
+            Q(title_eng=request.POST.get('city').title())
                 )
         except:
             detail_city = None
