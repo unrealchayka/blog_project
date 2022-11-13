@@ -36,7 +36,7 @@ class Post(models.Model):
         verbose_name_plural = 'Посты'
 
 
-class CommetPost(models.Model):
+class CommentPost(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
@@ -50,7 +50,7 @@ class CommetPost(models.Model):
         verbose_name_plural = 'Комментарии к постам'
 
 
-class CommetCity(models.Model):
+class CommentCity(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     city = models.ForeignKey('City', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)

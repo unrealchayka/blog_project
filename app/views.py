@@ -13,7 +13,6 @@ from .service import TelegrammMessage, Weather
 
 
 class HomeView(View):
-    
     def get(self, request):
         city = City.objects.all()
         paginator = Paginator(city, 12)
@@ -107,12 +106,14 @@ class AboutView(View):
         user = CustomUser.objects.filter(is_superuser=True)
         return render(request, 'about.html', locals())
 
+
 class FollowView(View):
     def post(self, request):
         user = request.POST['user']
         user2 = request.user
         Follow.objects.create(user_id=user, follower=user2)
         return redirect('user', request.POST['username'])
+
 
 class DelFollowView(View):
     def post(self, request):

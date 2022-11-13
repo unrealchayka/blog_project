@@ -8,6 +8,8 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('summernote/', include('django_summernote.urls')),
+    path('api-auth/', include('rest_framework.urls')),
     path('', include('app.urls')),
+    path('api/', include('app.apiurls')),
     path('', include('accounts.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

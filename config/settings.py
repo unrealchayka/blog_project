@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_summernote',
-    "debug_toolbar",
+    'debug_toolbar',
+    'rest_framework',
+    'django_filters',
 
     'app',
     'accounts',
@@ -155,3 +157,12 @@ SUMMERNOTE_THEME = 'bs4'
 CHAT_ID = '-1001893361867'
 TELEGRAM_TOKEN = '5705900358:AAFeAk5Uuaf4vjENXQc3YafJmG9mP10ywaw'
 APP_ID = 'e7e20ee0282592cb47398eecefe93435'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer'
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}

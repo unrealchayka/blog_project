@@ -2,3 +2,5 @@ django
 django-summernote
 pillow
 django-debug-toolbar
+djangorestframework
+django-filter
