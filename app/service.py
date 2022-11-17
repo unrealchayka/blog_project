@@ -2,12 +2,27 @@ import requests
 from config.settings import TELEGRAM_TOKEN, CHAT_ID, APP_ID
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
 
 
 chat_id = CHAT_ID
 telegram_token = TELEGRAM_TOKEN
 app_id = APP_ID
 
+
+def send_message(name, phone, email, message):
+    text = get_template('email.html')
+    html = get_template('email.html')
+    context = {'first_name':name, 'last_name': phone, 'email':email, 'message':message}
+    subjcet = 'Сообщение от пользоваетеля'
+    from_email = 'from@example.com'
+    text_content = text.render(context)
+    html_content = html.render(context)
+
+    msg = EmailMultiAlternatives(subjcet, text_content, from_email, ['manager@example.com'])
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
 
 def Weather(city):
     try:

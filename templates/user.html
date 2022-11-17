@@ -100,10 +100,10 @@
                   {% endif %}><span class="font-weight-bold">Имя: {{user.first_name}}<br> Фамилия: {{user.last_name}}</span><span class="text-black-50">email: {{user.email}}</span><span> </span>
                   <br>
                   {% if follow %}
-                  <form method="post"  action="{%url 'del_follow'%}">
+                  <form method="post" action="">
                     {% csrf_token %} 
                     <input type="hidden" name="user" value="{{user.id}}">
-                    <input type="hidden" name="username" value="{{user.username}}">
+                    <input type="hidden" name="a" value="">
                     <input style="
                     background-color: rgb(175, 175, 175);
                     border:3px black solid;
@@ -111,10 +111,10 @@
                     " class="btn btn_default" type="submit" value="Отписатся">
                   </form>
                   {% else %}
-                  <form method="post" action="{%url 'follow'%}">
+                  <form method="post" action="">
                     {% csrf_token %} 
                     <input type="hidden" name="user" value="{{user.id}}">
-                    <input type="hidden" name="username" value="{{user.username}}">
+                    <input type="hidden" name="a" value="add">
                     <input style="
                     background-color: rgb(106, 215, 255); 
                     border:3px black solid;

@@ -7,9 +7,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from .forms import PostForm
+from .forms import PostForm, ContactForm
 from .models import Category, City, CustomUser, Follow, Post
-from .service import TelegrammMessage, Weather
+from .service import Weather, send_message
 
 
 class HomeView(View):
@@ -99,6 +99,7 @@ class DeleteBlogView(View):
     def post(self, request):
         post = get_object_or_404(Post, id = request.POST.get('slug'), user = request.POST.get('user'))
         post.delete()
+        return redirect('')
 
 
 class AboutView(View):
@@ -107,34 +108,15 @@ class AboutView(View):
         return render(request, 'about.html', locals())
 
 
-class FollowView(View):
-    def post(self, request):
-        user = request.POST['user']
-        user2 = request.user
-        Follow.objects.create(user_id=user, follower=user2)
-        return redirect('user', request.POST['username'])
-
-
-class DelFollowView(View):
-    def post(self, request):
-        user = request.POST['user']
-        user2 = request.user
-        follow = Follow.objects.filter(user_id=user, follower=user2)
-        follow.delete()
-        return redirect('user', request.POST['username'])
-
-
 class ContactView(View):
     def get(self, request):
         return render(request, 'contact.html', locals())
 
     def post(self, request):
-        info = request.POST
-        info = ('Имя: {} Номер: {} email: {}').format(info['name'], info['text'], info['email'])
-        TelegrammMessage(message=info)
-        if request.POST['message']:
-            TelegrammMessage(message=request.POST['message'])
-        return redirect('home')
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            send_message(form.cleaned_data['name'], form.cleaned_data['text'], form.cleaned_data['email'], form.cleaned_data['message']) 
+        return render(request, 'contact.html', locals())
 
 
 class AuthorView(View):
@@ -148,4 +130,11 @@ class AuthorView(View):
             follow = None
         post = Post.objects.filter(author=user)
         return render(request, 'user.html', locals())
-
+    
+    def post(self, request, username):
+        if not request.POST['a']:
+            follow = Follow.objects.filter(user_id=request.POST['user'], follower=request.user)
+            follow.delete()
+        else:
+            follow = Follow.objects.create(user_id=request.POST['user'], follower=request.user)
+        return render(request, 'user.html', locals())

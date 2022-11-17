@@ -4,7 +4,6 @@ from .views import (AboutView, BlogView,
                     ContactView, AuthorView, 
                     HomeView, CreatePostView, 
                     DetailPostView, DetailCityView,
-                    FollowView, DelFollowView
                     )
 
 urlpatterns = [
@@ -17,8 +16,8 @@ urlpatterns = [
     path('contact/', ContactView.as_view(), name='contact'),
     path('user/<username>', AuthorView.as_view(), name='user'),
     path('city/<slug:slug>', DetailCityView.as_view(), name='detail_city'),
-    path('follow/', FollowView.as_view(), name='follow'),
-    path('delfollow/', DelFollowView.as_view(), name='del_follow'),
+    # path('follow/', FollowView.as_view(), name='follow'),
+    # path('delfollow/', DelFollowView.as_view(), name='del_follow'),
     
     # path('registration/', RegistrationView.as_view(), name='registration'),
 ]

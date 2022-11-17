@@ -11,3 +11,10 @@ class PostForm(forms.ModelForm):
         widgets = {
             'text': SummernoteWidget(),
         }
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=255)
+    text = forms.CharField(max_length=20)
+    email = forms.EmailField()
+    message = forms.CharField(max_length=1000)
