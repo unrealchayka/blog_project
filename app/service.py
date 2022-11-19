@@ -14,7 +14,7 @@ app_id = APP_ID
 def send_message(name, phone, email, message):
     text = get_template('email.html')
     html = get_template('email.html')
-    context = {'first_name':name, 'last_name': phone, 'email':email, 'message':message}
+    context = {'first_name':name, 'phone': phone, 'email':email, 'message':message}
     subjcet = 'Сообщение от пользоваетеля'
     from_email = 'from@example.com'
     text_content = text.render(context)
