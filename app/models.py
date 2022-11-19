@@ -122,3 +122,17 @@ class Follow(models.Model):
     class Meta: 
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
+
+
+class Task(models.Model):
+    title = models.CharField(max_length=250, verbose_name='название')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='пользователь')
+    description = models.TextField(max_length=2000, verbose_name='описание', blank=True, null=True)
+
+    def __str__(self):
+        return f'title: {self.title}  user: {self.user}'
+
+    class Meta: 
+        verbose_name = 'Заметка'
+        verbose_name_plural = 'Заметки'
+

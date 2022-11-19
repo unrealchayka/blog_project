@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from app.models import CustomUser, Post, Follow
+from app.models import CustomUser, Post, Follow, Task
 from .forms import CustomUserForm, UserRegistrationForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -12,6 +12,7 @@ class ProfileView(View):
         user = request.user 
         follow = Follow.objects.filter(follower=user)
         post = Post.objects.filter(author=user)
+        task = Task.objects.filter(user = user)[:10]
         form = CustomUserForm(instance=user)
         return render(request, 'profile.html', locals())
 

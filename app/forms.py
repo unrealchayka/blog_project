@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Task
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 
@@ -11,6 +11,11 @@ class PostForm(forms.ModelForm):
         widgets = {
             'text': SummernoteWidget(),
         }
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ('title', 'description')
 
 
 class ContactForm(forms.Form):

@@ -7,8 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from .forms import PostForm, ContactForm
-from .models import Category, City, CustomUser, Follow, Post
+from .forms import PostForm, ContactForm, TaskForm
+from .models import Category, City, CustomUser, Follow, Post, Task
 from .service import Weather, send_message
 
 
@@ -115,7 +115,8 @@ class ContactView(View):
     def post(self, request):
         form = ContactForm(request.POST)
         if form.is_valid():
-            send_message(form.cleaned_data['name'], form.cleaned_data['text'], form.cleaned_data['email'], form.cleaned_data['message']) 
+            send_message(form.cleaned_data['name'], form.cleaned_data['text'],
+                     form.cleaned_data['email'], form.cleaned_data['message']) 
         return render(request, 'contact.html', locals())
 
 
@@ -138,3 +139,22 @@ class AuthorView(View):
         else:
             follow = Follow.objects.create(user_id=request.POST['user'], follower=request.user)
         return render(request, 'user.html', locals())
+
+
+class CreateTaskView(View):
+    def post(self, request):
+        print(request.POST)
+        form = TaskForm(request.POST)   
+        if form.is_valid():
+            Task.objects.create(
+                user = request.user, 
+                title = form.cleaned_data['title'],
+                description = form.cleaned_data['description']
+            )
+        return redirect('profile')
+
+class DelTaskView(View):
+    def post(self, request):
+        task = Task.objects.filter(user = request.user, id = request.POST['id'])
+        task.delete()
+        return redirect('profile')
