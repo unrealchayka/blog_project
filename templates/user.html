@@ -90,7 +90,109 @@
       </div>
     </section>
     <!-- END section -->
-    <div class="container rounded bg-white mt-5 mb-5">
+
+
+    <div class="table" style="
+    background-image: url(https://i.pinimg.com/originals/8c/04/52/8c0452391c0e8f0e66a4ddc975088dd1.jpg);
+    background-size: 100%;
+    border: 3px black solid; 
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 20px; 
+    position: relative;
+    left: 120px;
+    width: 1245px;
+    top: 150px;">
+
+        <div class = 'section-1' style="border: 3px rgb(255, 255, 255) solid; border-radius: 20px 0px 0px 20px; width: 400px; padding: 20px; ">
+          <img class="rounded-circle mt-5" width="150px"
+          style="position: relative; top: -50px; left: 100px;" 
+            {% if not user.image %}
+            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+            {% else %} src = '{{user.image.url}}' 
+            {% endif %}>
+
+          <div class = 'lvl-2' style="border: 3px rgb(153, 152, 152) solid; border-radius: 10px; background-color: rgb(255, 255, 255); width: 350px; padding: 20px; ">
+            <h4>Имя: {{user.first_name}}</h4>
+            <h4>Фамилия: {{user.last_name}}</h4>
+            <h4>E-mail: {{user.email}}</h4>
+          </div>
+          <br>
+          {% if follow %}
+                  <form method="post" action="">
+                    {% csrf_token %} 
+                    <input type="hidden" name="user" value="{{user.id}}">
+                    <input type="hidden" name="a" value="">
+                    <input style="
+                    background-color: rgb(175, 175, 175);
+                    border:3px black solid;
+                    border-radius: 10px;
+                    " class="btn btn_default" type="submit" value="Отписатся">
+                  </form>
+                  {% else %}
+                  <form method="post" action="">
+                    {% csrf_token %} 
+                    <input type="hidden" name="user" value="{{user.id}}">
+                    <input type="hidden" name="a" value="add">
+                    <input style="
+                    background-color: rgb(106, 215, 255); 
+                    border:3px black solid;
+                    border-radius: 10px;
+                    " class="btn btn_default" type="submit" value="Подписаться">
+                  </form>
+                  {% endif %}
+      </div>
+        <div class = 'section-2' style="border: 3px rgb(255, 255, 255) solid; width: 400px;">
+          <h3 style='padding: 20px; color: black; position: relative; left: 10px; color: white;'>{% if user.description %}
+            {{user.description}}
+            {% else %}
+            Информация отсутствует
+            {% endif %}
+            </h3>
+          
+          <!-- <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+          <div class="form-1" style="
+          display: flex;
+          padding: 10px;
+          flex-direction: row;
+          justify-content: flex-start;" >
+            {{form.first_name}}
+            {{form.last_name}}
+          </div>
+          <div style="position: relative; left: 20px; background-color: white; width: 340px;">{{ form.image }}</div> 
+          <div class="mt-5 text-center"><button 
+          style="color: black; background-color: white; border: 3px black solid; border-radius: 10px;
+          position: relative; top: -20px"
+          class="btn btn-primary profile-button"
+          type="submit">Редактировать профиль</button></div>
+        </form> -->
+        </div>
+        <div class = 'section-3' style="border: 3px rgb(255, 255, 255) solid; border-radius: 0px 20px 20px 0px; width: 400px; padding: 10px;">
+          {% for t in post %}
+            <div style="display: flex;
+            flex-direction: row;
+            justify-content: flex-start; padding: 5px;">
+              <div class="task" style="border: 3px black solid; width: 300px; border-radius: 10px 0px 0px 10px; padding: 6px; background-color: white;">
+                <a href="" style="color: black;padding: 6px;">{{t.title}}</a>
+              </div>
+              <input type="submit" value="Подробнее" class="tap" style="
+              color: rgb(0, 0, 0);
+              background-color: rgb(253, 105, 105);
+              border-radius: 0px 10px 10px 0px; 
+              padding: 7px;
+              ">
+              <input type="hidden" name="id" value="{{t.id}}">
+          </div>
+          {% endfor %}
+        </div>
+    </div>
+    <br>
+
+
+    <!-- <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" 
@@ -143,8 +245,9 @@
         </div>
     </div>
     </div>
-    </div>
+    </div> -->
     <!-- END section -->
+    <br>
     
     <section class="site-section">
       <div class="container">

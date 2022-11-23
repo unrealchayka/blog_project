@@ -12,7 +12,7 @@ class ProfileView(View):
         user = request.user 
         follow = Follow.objects.filter(follower=user)
         post = Post.objects.filter(author=user)
-        task = Task.objects.filter(user = user)[:10]
+        task = Task.objects.filter(user = user).order_by('-id')[:10]
         form = CustomUserForm(instance=user)
         return render(request, 'profile.html', locals())
 

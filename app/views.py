@@ -125,14 +125,17 @@ class AuthorView(View):
         if username == request.user.username:
             return redirect('profile')
         user = get_object_or_404(CustomUser, username=username)
+        post = Post.objects.filter(author=user).select_related('category')
         try:
-            follow = Follow.objects.get(follower = request.user, user = user)
+            follow = Follow.objects.select_related('user', 'follower').get(follower = request.user, user = user)
         except:
             follow = None
-        post = Post.objects.filter(author=user)
         return render(request, 'user.html', locals())
     
     def post(self, request, username):
+        post = Post.objects.filter(author__username=username).select_related('category')
+        user = get_object_or_404(CustomUser, username=username)
+
         if not request.POST['a']:
             follow = Follow.objects.filter(user_id=request.POST['user'], follower=request.user)
             follow.delete()
@@ -143,7 +146,6 @@ class AuthorView(View):
 
 class CreateTaskView(View):
     def post(self, request):
-        print(request.POST)
         form = TaskForm(request.POST)   
         if form.is_valid():
             Task.objects.create(

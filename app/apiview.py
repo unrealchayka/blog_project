@@ -104,18 +104,17 @@ class FollowViewSet(mixins.CreateModelMixin,
     pagination_class = PostPage
 
 
-    def create(self, request):
+    def create(self, request, *args, **kwargs):
         users = request.data 
         if users['user']==users['follower']:
             return Response({'post':{'error': 'The user cannot be subscribed to himself'}})
-
+            
         if Follow.objects.filter(user = users['user'], follower=users['follower']):
            return Response({'post':{'error': 'The object already exists'}})
-
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid()
         serializer.save()
-
+        
         return Response({'post' : serializer.data})
     
     
