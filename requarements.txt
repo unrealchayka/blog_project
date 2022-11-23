@@ -4,3 +4,4 @@ pillow
 django-debug-toolbar
 djangorestframework
 django-filter
+requests
